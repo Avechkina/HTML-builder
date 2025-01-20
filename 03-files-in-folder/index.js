@@ -8,9 +8,9 @@ const showFiles = async () => {
     const arrOfFiles = await fs.readdir(folder, { withFileTypes: true });
     for (let i = 0; i < arrOfFiles.length; i++) {
       if (arrOfFiles[i].isFile()) {
-        const nameInfo = arrOfFiles[i].name.split('.');
+        const nameInfo = path.parse(arrOfFiles[i].name);
         const sizeInfo = await fs.stat(path.join(folder, arrOfFiles[i].name));
-        console.log(`${nameInfo[0]} - ${nameInfo[1]} - ${(sizeInfo.size / 1024).toFixed(4)} kb`);
+        console.log(`${nameInfo.name} - ${nameInfo.ext.slice(1)} - ${(sizeInfo.size / 1024).toFixed(4)} kb`);
       }
     }
   } catch (error) {
